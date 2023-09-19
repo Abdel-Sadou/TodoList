@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~font-awesome/css/font-awesome.min.css";
+
+body{
+  margin: 0;
+  overflow-x: hidden;
+  background-color: #f0f1ed !important;
+}
+* {
+  box-sizing: border-box;
+  font-family: Candara, sans-serif ;
+}
+
+.task-nav{
+  background-color: #bdc0b1 !important;
+}
+
+.bg-color-logo{
+  background-color: #abc066!important;
+}

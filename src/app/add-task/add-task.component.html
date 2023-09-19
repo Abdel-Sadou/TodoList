@@ -1,0 +1,53 @@
+<form [formGroup]="formGroupTask">
+  <div class="row d-flex justify-content-center">
+    <div class=" col-4">
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+                <textarea rows="2" [ngClass]="{'is-invalid':submitted && formGroupTask.controls['name'].errors}"
+                          formControlName="name" class=" input-group form-control"></textarea>
+            </div>
+            <small *ngIf="submitted && formGroupTask.controls['name'].errors" class="text-danger">put the task !</small>
+
+            <div class="row mt-2">
+              <div class="col-5">
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon1">Due date</span>
+                  <input type="date" class="form-control"
+                         [ngClass]="{'is-invalid':submitted && formGroupTask.controls['dueDate'].errors}"
+                         formControlName="dueDate">
+                </div>
+              </div>
+              <small *ngIf="submitted && formGroupTask.controls['dueDate'].errors" class="text-danger">put due date !</small>
+              <div class="form-check form-check-inline col-2 mt-2" >
+                <input  name="level" class="form-check-input" type="radio" value="weak" formControlName="level" id="inlineRadio1">
+                <label class="form-check-label" for="inlineRadio1">Weak</label>
+              </div>
+              <div class="form-check form-check-inline col-2 mt-2">
+                <input  name="level" value="middle" class="form-check-input" type="radio" formControlName="level"  id="inlineRadio2">
+                <label class="form-check-label" for="inlineRadio2" >Middle</label>
+              </div>
+              <div class="form-check form-check-inline col-2 mt-2">
+                <input  name="level" class="form-check-input" type="radio"  id="inlineRadio3"
+                       value="high" formControlName="level">
+                <label class="form-check-label" for="inlineRadio3">High</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header">
+          <div class="d-flex justify-content-end ">
+            <button class="btn btn-success" (click)="saveTask()">Add a task <i class="fa fa-plus-circle"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<app-list-item-task (_onDeleteTask)="deleteTask($event)" [tasks$]="tasks$"></app-list-item-task>
+
+
+
