@@ -1,7 +1,13 @@
 <!-- Just an image -->
   <nav class="navbar navbar-light task-nav">
     <a class="navbar-brand  mx-4 fst-italic d-inline">
-      <img src="assets/logo/logo.png" width="70" height="70">
+      <img src="assets/logo/logo.png" width="50" height="50">
       <span class="fst-italic" style="font-size: 1.25rem; font-weight: 500 ; margin-left: 10px">Do It</span>
+    </a>
+    <a class="navbar-brand  mx-4 fst-italic d-inline">
+      <div class="input-group mcol-md-3 col-lg-4">
+        <button class=" input-group-text" id="basic-addon1" (click)="findTask()">search</button>
+        <input type="text" class="form-control" [(ngModel)]="keysWord">
+      </div>
     </a>
   </nav>

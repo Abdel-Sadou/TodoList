@@ -74,4 +74,19 @@ export class AddTaskComponent implements OnInit {
     })
 
   }
+  editTask(t: TaskTodo) {
+    this.taskService.updateTaskTodo(t).subscribe({
+      next: (val) => {
+
+      },
+      error: (err) => {
+
+      },
+      complete: () => {
+        console.log("Update successfully");
+        this.getListOfTasks();
+      }
+    })
+
+  }
 }

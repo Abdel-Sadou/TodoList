@@ -13,6 +13,7 @@ export class ListItemTaskComponent implements OnInit {
   @Input() tasks$ ?: Observable<AppDataState<TaskTodo[]>>;
   readonly DataState = DataState;
    @Output() _onDeleteTask : EventEmitter<TaskTodo> = new EventEmitter<TaskTodo>();
+   @Output() _onEditTask : EventEmitter<TaskTodo> = new EventEmitter<TaskTodo>();
 
   constructor(private taskService: TaskTodoService) {
   }
@@ -22,11 +23,10 @@ export class ListItemTaskComponent implements OnInit {
   }
 
   editTask(t: TaskTodo) {
-
+    this._onEditTask.emit(t);
   }
 
-
   deleteTask(t: TaskTodo) {
-    this._onDeleteTask.emit(t)
+    this._onDeleteTask.emit(t);
   }
 }
