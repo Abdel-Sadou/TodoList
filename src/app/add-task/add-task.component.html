@@ -1,3 +1,5 @@
+<app-header (keysWordPut)="getTaskByKeywords($event)"></app-header>
+
 <form [formGroup]="formGroupTask">
   <div class="row d-flex justify-content-center">
     <div class=" col-4">
@@ -49,7 +51,7 @@
 </form>
 
 
-<app-list-item-task (_onDeleteTask)="deleteTask($event)" (_onEditTask)="editTask($event)" [tasks$]="tasks$"></app-list-item-task>
+<app-list-item-task (_onDeleteTask)="deleteTask($event)" (_onEditTask)="editTask($event)" [tasks$]="tasks$" ></app-list-item-task>
 
 
 

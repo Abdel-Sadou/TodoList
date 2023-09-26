@@ -23,3 +23,7 @@ body{
 .bg-color-edit{
   background-color: #e4e7dd !important;
 }
+
+.clickable{
+  cursor: pointer;
+}

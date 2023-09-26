@@ -14,7 +14,7 @@ export class AddTaskComponent implements OnInit {
 
   formGroupTask !: FormGroup;
   tasks$ ?: Observable<AppDataState<TaskTodo[]>>
-  submitted ?: boolean = false
+  submitted : boolean = false
 
   constructor(private fb: FormBuilder, private taskService: TaskTodoService, private router: Router) {
   }
@@ -58,7 +58,16 @@ export class AddTaskComponent implements OnInit {
       )
     );
   }
-
+ getTaskByKeywords(keyword:string){
+   this.tasks$ = this.taskService.searchTaskTodos(keyword).pipe(
+     map((data) => {
+       return ({data: data, state: DataState.LOAD})
+     }),
+     startWith({state: DataState.LOADING}),
+     catchError(err => of({state: DataState.ERROR, errorMessage: err.message()})
+     )
+   );
+ }
   deleteTask(t: TaskTodo) {
     this.taskService.deleteTaskTodo(t).subscribe({
       next: (val) => {
