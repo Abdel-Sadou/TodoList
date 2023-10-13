@@ -1,40 +1,37 @@
-<app-header (keysWordPut)="getTaskByKeywords($event)"></app-header>
 
 <form [formGroup]="formGroupTask">
-  <div class="row d-flex justify-content-center">
+  <div class="row d-flex justify-content-center fs-7">
     <div class=" col-4">
       <div class="card mt-3">
         <div class="card-body">
           <div class="row">
             <div class="col-12">
                 <textarea rows="2" [ngClass]="{'is-invalid':submitted && formGroupTask.controls['name'].errors}"
-                          formControlName="name" class=" input-group form-control"></textarea>
+                          formControlName="name" class="fs-7 input-group form-control"></textarea>
               <small *ngIf="submitted && formGroupTask.controls['name'].errors" class="text-danger">put the task !</small>
             </div>
-
-
             <div class="row mt-2">
-              <div class="col-5">
-                <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1">Due date</span>
-                  <input type="date" class="form-control"
+              <div class="col-6">
+                <div class="input-group fs-7">
+                  <span class="input-group-text fs-7" id="basic-addon1">Due date</span>
+                  <input type="date" class="form-control fs-7"
                          [ngClass]="{'is-invalid':submitted && formGroupTask.controls['dueDate'].errors}"
                          formControlName="dueDate">
                 </div>
                 <small *ngIf="submitted && formGroupTask.controls['dueDate'].errors" class="text-danger">put due date !</small>
               </div>
 
-              <div class="form-check form-check-inline col-2 mt-2" >
+              <div class="form-check form-check-inline col-1 mt-2" >
                 <input  name="level" class="form-check-input" type="radio" value="weak" formControlName="level" id="inlineRadio1">
                 <label class="form-check-label" for="inlineRadio1">Weak</label>
               </div>
-              <div class="form-check form-check-inline col-2 mt-2">
+              <div class="form-check form-check-inline col-1 mx-5 mt-2">
                 <input  name="level" value="middle" class="form-check-input" type="radio" formControlName="level"  id="inlineRadio2">
                 <label class="form-check-label" for="inlineRadio2" >Middle</label>
               </div>
-              <div class="form-check form-check-inline col-2 mt-2">
+              <div class="form-check form-check-inline col-1 mt-2">
                 <input  name="level" class="form-check-input" type="radio"  id="inlineRadio3"
-                       value="high" formControlName="level">
+                        value="high" formControlName="level">
                 <label class="form-check-label" for="inlineRadio3">High</label>
               </div>
             </div>
@@ -42,7 +39,7 @@
         </div>
         <div class="card-header">
           <div class="d-flex justify-content-end ">
-            <button class="btn btn-success" (click)="saveTask()">Add a task <i class="fa fa-plus-circle"></i></button>
+            <button class="btn bg-color-logo fs-7" (click)="saveTask()">Add a task <i class="fa fa-plus-circle text-white"></i></button>
           </div>
         </div>
       </div>
@@ -50,8 +47,20 @@
   </div>
 </form>
 
+<div class="m-4">
+  <div style="position: absolute ; top: 20% ; right: 7%">
+    <div class="toast" data-bs-delay="1000" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto"><i class="bi-gift-fill"></i> Message !</strong>
+        <small>now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body text-primary">
+       Successfully save Todo !
+       </div>
+    </div>
+  </div>
 
-<app-list-item-task (_onDeleteTask)="deleteTask($event)" (_onEditTask)="editTask($event)" [tasks$]="tasks$" ></app-list-item-task>
-
+</div>
 
 

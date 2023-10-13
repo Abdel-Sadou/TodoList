@@ -1,44 +1,53 @@
-<div class="row mt-4 container-fluid">
+<div class="row mt-4 container-fluid  fs-7">
   <div class="row">
-    <div class="col-md-1 m-lg-5 border-end">
-      <h5>Filter <i class="fa fa-1x fa-filter"></i></h5>
-      <ul class="nav flex-column">
-        <li class="nav-item ">
-          <a class="nav-link active clickable">All</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link active clickable">Weak</a>
+    <div class="col-md-2 border-end ">
+      <div class="col-12 row">
+        <div class="col-4"><h6>Filter <i class="fa fa-1x fs-7 fa-filter"></i></h6></div>
+        <div class="col-8 ">
+          <select class="fs-7 custom-select form-control" [(ngModel)]="categorie" (change)="_onSelectCategorie()">
+            <option value="all">All tasks</option>
+            <option value="completedTask">Finished tasks</option>
+            <option value="unfinishedTasks">Unfinished tasks</option>
+            <option value="taskOfDay">Task of the day</option>
+          </select>
+        </div>
+      </div>
+
+      <ul class="nav flex-column col-3">
+        <li class="nav-item">
+          <a class="nav-link  clickable" [ngClass]="{'active':filter==='all'}" (click)="getLevelTask('all')">All</a>
+        </li> <li class="nav-item">
+          <a class="nav-link  clickable" [ngClass]="{'active':filter==='weak'}" (click)="getLevelTask('weak')">Weak</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link clickable">Middle</a>
+          <a class="nav-link clickable" [ngClass]="{'active':filter==='middle'}"
+             (click)="getLevelTask('middle')">Middle</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link clickable">High</a>
+          <a class="nav-link clickable" [ngClass]="{'active':filter==='high'}" (click)="getLevelTask('high')">High</a>
         </li>
       </ul>
     </div>
-
-    <div class="col-md-9">
-
+    <div class="col-md-10">
       <ng-container *ngIf="tasks$|async as result" [ngSwitch]="result.state">
-        <h2 class="text-center fst-italic" *ngIf="result.data?.length"><u>List of tasks</u></h2>
 
         <ng-container *ngSwitchCase="DataState.ERROR">
           Error.....
         </ng-container>
 
         <ng-container *ngSwitchCase="DataState.LOADING">
-          Loading......
+          <div class="container-fluid justify-content-center d-flex align-items-center " style="height: 100% ; margin: auto">
+            <div class="spinner-border " style="width: 3rem; height: 3rem; color: #bdc0b1" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </ng-container>
 
         <ng-container *ngSwitchCase="DataState.LOAD">
-          <app-item-task [tasks]="result.data" (getDeleteTask)="deleteTask($event)"
-                         (getEditTask)="editTask($event)"></app-item-task>
+          <app-item-task [tasks]="result.data"></app-item-task>
         </ng-container>
       </ng-container>
     </div>
   </div>
-
-
 </div>
 

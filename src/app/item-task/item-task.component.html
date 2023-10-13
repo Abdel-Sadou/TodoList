@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="mt-3 col-md-2 col-lg-3" *ngFor="let t of tasks">
+    <div class="card "  [ngClass]="{'text-card-end':t.isEnd}">
+
+      <div class="card-header">
+        <div class="d-flex justify-content-around">
+          <button class="btn fs-7 " *ngIf="!t.isEnd" (click)="endOfTask(t,true)">End?  <i
+            class="fa fa-circle-o text-warning"></i></button>
+
+          <button class="btn fs-7" *ngIf="t.isEnd" (click)="endOfTask(t,false)">Start?  <i
+            class="fa  fa-check-circle-o text-white  ml-2"></i></button>
+
+          <i class="fa fa-trash text-danger btn" (click)="deleteTask(t)"></i>
+
+          <i class="fa fa-edit text-primary btn" *ngIf="!t.isEdit" (click)="letEdit(t)"></i>
+
+          <i class="btn fa fa-save text-primary" *ngIf="t.isEdit" (click)="editTask(t)"></i>
+
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <textarea rows="2" [disabled]="!t.isEdit" [(ngModel)]="t.name" class="fs-7 input-group form-control"></textarea>
+          </div>
+          <div class="input-group mt-3 col-md-3 col-lg-4">
+            <span class="input-group-text" id="basic-addon1 fs-7">Due date</span>
+            <input type="date" class="form-control fs-7" [disabled]="!t.isEdit" [(ngModel)]="t.dueDate">
+          </div>
+          <div class="col-md-12 col-lg-12">
+            <div class=" row mt-2" *ngIf="t.level">
+              <div class="col-md-6 mt-2">
+                Level : <i *ngIf="!t.isEdit" class="text-capitalize" style="margin-left: 10px">{{t.level}} <sup><i
+                class="text-danger fa fa-flag"></i></sup></i>
+              </div>
+              <div class="col-md-6" *ngIf="t.isEdit">
+                <select [(ngModel)]="t.level"  class="custom-select form-control">
+                  <option value="weak">weak</option>
+                  <option value="middle">middle</option>
+                  <option value="high">high</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

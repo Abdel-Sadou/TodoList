@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from "rxjs";
-import {AppDataState, DataState, TaskTodo} from "../../model/task";
+import {filter, Observable} from "rxjs";
+import {ActionEvent, AppDataState, DataState, TaskTodo, TaskTypeOperation} from "../../model/task";
 import {TaskTodoService} from "../../service/task.service";
+import {EvenDriverService} from "../../service/even-driver.service";
 
 @Component({
   selector: 'app-list-item-task',
@@ -12,21 +13,60 @@ export class ListItemTaskComponent implements OnInit {
 
   @Input() tasks$ ?: Observable<AppDataState<TaskTodo[]>>;
   readonly DataState = DataState;
-   @Output() _onDeleteTask : EventEmitter<TaskTodo> = new EventEmitter<TaskTodo>();
-   @Output() _onEditTask : EventEmitter<TaskTodo> = new EventEmitter<TaskTodo>();
-
-  constructor(private taskService: TaskTodoService) {
+  filter: string = '';
+  categorie: string = "all"
+  actionEvent: ActionEvent = new ActionEvent();
+  constructor(private taskService: TaskTodoService, private evenDriverService: EvenDriverService) {
   }
 
   ngOnInit(): void {
+    this.filter = "all";
+  }
+
+
+  _onSelectCategorie() {
+    this.getTaskOfCategory(this.categorie)
+  }
+
+
+  getTaskOfCategory(category:string) {
+    this.actionEvent.operation = TaskTypeOperation.GET_TASK_OF_CATEGORY;
+    this.actionEvent.payload = category;
+    this.evenDriverService.publishEvent(this.actionEvent);
+  }
+
+  getLevelTask (filter:string ) {
+    this.actionEvent.payload = filter;
+    this.filter = filter;
+    this.actionEvent.operation = TaskTypeOperation.GET_TASK_FOR_LEVEL;
+    this.evenDriverService.publishEvent(this.actionEvent);
 
   }
 
-  editTask(t: TaskTodo) {
-    this._onEditTask.emit(t);
+  getAllTask() {
+    this.actionEvent.operation = TaskTypeOperation.GET_TASK;
+    this.actionEvent.payload = {};
+    this.evenDriverService.publishEvent(this.actionEvent);
+    this.filter = 'all';
   }
 
-  deleteTask(t: TaskTodo) {
-    this._onDeleteTask.emit(t);
+  getEndTask() {
+    this.actionEvent.operation = TaskTypeOperation.GET_END_TASK;
+    this.actionEvent.payload = {};
+    this.evenDriverService.publishEvent(this.actionEvent);
   }
+
+
+  getCurrentTask() {
+    this.actionEvent.operation = TaskTypeOperation.GET_CURRENT_TASK;
+    this.actionEvent.payload = {};
+    this.evenDriverService.publishEvent(this.actionEvent);
+  }
+
+  getUnfinishedTask() {
+    this.actionEvent.operation = TaskTypeOperation.GET_UNFINISHED_TASK;
+    this.actionEvent.payload = {};
+    this.evenDriverService.publishEvent(this.actionEvent);
+  }
+
 }

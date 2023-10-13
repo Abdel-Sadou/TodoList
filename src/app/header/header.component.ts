@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AddTaskComponent} from "../add-task/add-task.component";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-header',
@@ -8,20 +8,17 @@ import {AddTaskComponent} from "../add-task/add-task.component";
 })
 export class HeaderComponent implements OnInit {
 
-@Output()
-keysWordPut: EventEmitter<string> = new EventEmitter<string>();
-  keysWord: string="";
+@Output() keysWordPut: EventEmitter<string> = new EventEmitter<string>();
+          keysWord: string = "" ;
 
 
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
 
   }
 
   findTask() {
-    console.log("im there")
       this.keysWordPut.emit(this.keysWord);
   }
 }

@@ -6,17 +6,19 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HeaderComponent } from './header/header.component';
-import { AddTaskComponent } from './add-task/add-task.component';
-import { ItemTaskComponent } from './list-item-task/item-task/item-task.component';
+import { TaskComponent } from './task/task.component';
+import { ItemTaskComponent } from './item-task/item-task.component';
 import { ListItemTaskComponent } from './list-item-task/list-item-task.component';
+import {AddTaskTodoComponent} from "./add-taskTodo/add-taskTodo.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AddTaskComponent,
+    TaskComponent,
     ItemTaskComponent,
-    ListItemTaskComponent
+    ListItemTaskComponent,
+    AddTaskTodoComponent
   ],
   imports: [
     BrowserModule,
