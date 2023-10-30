@@ -19,8 +19,6 @@ export class TaskTodoService {
   }
 
   getEndOfTaskTodos(): Observable<TaskTodo[]> {
-    console.log("rest :::")
-    console.log(this.host + "/TaskTodos?isEnd=true")
     return this.http.get<TaskTodo[]>(this.host + "/TaskTodos?isEnd=true");
   }
 

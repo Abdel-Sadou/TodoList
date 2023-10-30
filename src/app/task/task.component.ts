@@ -3,6 +3,7 @@ import {catchError, map, Observable, of, startWith} from "rxjs";
 import {TaskTodoService} from "../../service/task.service";
 import {AppDataState, DataState, TaskTodo, TaskTypeOperation} from "../../model/task";
 import {EvenDriverService} from "../../service/even-driver.service";
+import {gsap} from "gsap";
 
 @Component({
   selector: 'app-task',
@@ -14,6 +15,8 @@ export class TaskComponent implements OnInit {
   tasks$ ?: Observable<AppDataState<TaskTodo[]>>
   currentLevel: string = "all";
   currentCategorie: string = "all";
+  message: string = '';
+  type: string = '';
 
   constructor(private taskService: TaskTodoService, private eventDriverService: EvenDriverService) {
   }
@@ -75,6 +78,9 @@ export class TaskComponent implements OnInit {
       complete: () => {
         console.log("save successfully");
         this.getTaskForLevel(this.currentLevel);
+        this.openToast()
+        this.message = 'Successfully save Todo !';
+        this.type='success'
       },
       error: (error) => {
         console.log(error)
@@ -87,7 +93,7 @@ export class TaskComponent implements OnInit {
     console.log("getEndOfTaskTodos :::");
     this.tasks$ = this.taskService.getEndOfTaskTodos().pipe(
       map((data) => {
-        if (this.currentLevel!="all")  data = data.filter(t=>t.level == this.currentLevel);
+        if (this.currentLevel != "all") data = data.filter(t => t.level == this.currentLevel);
         return ({data: data, state: DataState.LOAD})
       }),
       startWith({state: DataState.LOADING}),
@@ -100,7 +106,7 @@ export class TaskComponent implements OnInit {
   getCurrentTasks() {
     this.tasks$ = this.taskService.getCurrentTasks().pipe(
       map((data) => {
-        if (this.currentLevel!="all")   data = data.filter(t=>t.level == this.currentLevel);
+        if (this.currentLevel != "all") data = data.filter(t => t.level == this.currentLevel);
         return ({data: data, state: DataState.LOAD})
       }),
       startWith({state: DataState.LOADING}),
@@ -113,7 +119,7 @@ export class TaskComponent implements OnInit {
   getUnfinishedOfTaskTodos() {
     this.tasks$ = this.taskService.getUnfinishedOfTaskTodos().pipe(
       map((data) => {
-        if (this.currentLevel!="all") data = data.filter(t=>t.level == this.currentLevel);
+        if (this.currentLevel != "all") data = data.filter(t => t.level == this.currentLevel);
         return ({data: data, state: DataState.LOAD})
       }),
       startWith({state: DataState.LOADING}),
@@ -124,21 +130,21 @@ export class TaskComponent implements OnInit {
 
 
   getTaskForLevel(level: string) {
-    if (level===""){
-      level="all"
+    if (level === "") {
+      level = "all"
     }
     this.tasks$ = this.taskService.getTaskTodosOfLevel(level).pipe(
       map((data) => {
-        switch (this.currentCategorie ) {
+        switch (this.currentCategorie) {
           case 'completedTask':
-           data = data.filter(t=>t.isEnd);
+            data = data.filter(t => t.isEnd);
             break;
           case 'unfinishedTasks':
-            data = data.filter(t=>!t.isEnd);
+            data = data.filter(t => !t.isEnd);
             break;
           case 'taskOfDay':
-            let currentDate = new Date().getFullYear()+"-"+(new Date().getUTCMonth()+1)+"-"+new Date().getDate();
-            data = data.filter(t=>t.dueDate?.toDateString()==currentDate);
+            let currentDate = new Date().getFullYear() + "-" + (new Date().getUTCMonth() + 1) + "-" + new Date().getDate();
+            data = data.filter(t => t.dueDate?.toDateString() == currentDate);
             break;
         }
         return ({data: data, state: DataState.LOAD})
@@ -169,7 +175,7 @@ export class TaskComponent implements OnInit {
   getListOfTasks(): void {
     this.tasks$ = this.taskService.getAllTaskTodo().pipe(
       map((data) => {
-       if (this.currentLevel!="all") data = data.filter(t=>t.level == this.currentLevel);
+        if (this.currentLevel != "all") data = data.filter(t => t.level == this.currentLevel);
 
 
         return ({data: data, state: DataState.LOAD})
@@ -215,13 +221,13 @@ export class TaskComponent implements OnInit {
       },
       complete: () => {
         console.log("suis laaaaaa")
-        if (this.currentLevel!="all") this.getListOfTasks();
-        if (this.currentCategorie!="all") this.getTaskOfCategory(this.currentCategorie)
+        if (this.currentLevel != "all") this.getListOfTasks();
+        if (this.currentCategorie != "all") this.getTaskOfCategory(this.currentCategorie)
       }
     })
   }
 
- deleteTaskTodo(t: TaskTodo) {
+  deleteTaskTodo(t: TaskTodo) {
     this.taskService.deleteTaskTodo(t).subscribe({
       next: (val) => {
 
@@ -230,10 +236,20 @@ export class TaskComponent implements OnInit {
 
       },
       complete: () => {
-        if (this.currentLevel!="all") this.getListOfTasks();
-        if (this.currentCategorie!="all") this.getTaskOfCategory(this.currentCategorie)
+        this.getListOfTasks();
+        this.getTaskOfCategory(this.currentCategorie)
+        this.openToast()
+        this.message = 'Successfully delete Todo !';
+        this.type='error'
       }
     })
   }
 
+  openToast() {
+    const toast = document.querySelector('#liveToast');
+    toast?.classList.add("show")
+    setTimeout(() => {
+      toast?.classList.remove("show")
+    }, 2000)
+  }
 }

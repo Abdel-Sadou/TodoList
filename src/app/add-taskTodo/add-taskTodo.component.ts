@@ -12,6 +12,7 @@ export class AddTaskTodoComponent implements OnInit {
 
   formGroupTask !: FormGroup;
   submitted: boolean = false
+  message :string=''
   @Output() _onSaveTaskTodo: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   constructor(private fb: FormBuilder, private eventDriverService: EvenDriverService) {
@@ -40,17 +41,9 @@ export class AddTaskTodoComponent implements OnInit {
       task.isEdit = false;
 
       actionEvent.payload = task;
-
       this.eventDriverService.publishEvent(actionEvent);
-      this.openToast()
     }
   }
 
-  openToast() {
-    const  toast = document.querySelector('#liveToast');
-    toast?.classList.add("show")
-    setTimeout(()=>{
-      toast?.classList.remove("show")
-    },2000)
-  }
+
 }

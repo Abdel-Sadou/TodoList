@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActionEvent, TaskTodo, TaskTypeOperation} from "../../model/task";
 import {EvenDriverService} from "../../service/even-driver.service";
+import {gsap} from "gsap";
+
 
 @Component({
   selector: 'app-item-task',
@@ -17,7 +19,9 @@ export class ItemTaskComponent implements OnInit {
 
   constructor(private evenDriverService :EvenDriverService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    gsap.from(".task",{y:200, ease:"elastic.inOut", duration:.5,stagger:.1})
+  }
 
   endOfTask(t:TaskTodo , isEnd:boolean) {
     t.isEnd = isEnd;
@@ -29,16 +33,17 @@ export class ItemTaskComponent implements OnInit {
   editTask(t: TaskTodo) {
     let actionEvent: ActionEvent = new ActionEvent();
     actionEvent.operation = TaskTypeOperation.EDIT_TASK;
+    t.isEdit =false
     actionEvent.payload = t;
     this.evenDriverService.publishEvent(actionEvent);
-    t.isEdit =false
+
   }
 
   deleteTask(t: TaskTodo) {
-    console.log("oui :::::::")
     let actionEvent: ActionEvent = new ActionEvent();
     actionEvent.operation = TaskTypeOperation.DELETE_TASK;
     actionEvent.payload = t;
+    console.log(t)
     this.evenDriverService.publishEvent(actionEvent);
   }
 

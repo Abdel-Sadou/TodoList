@@ -10,7 +10,10 @@ import { TaskComponent } from './task/task.component';
 import { ItemTaskComponent } from './item-task/item-task.component';
 import { ListItemTaskComponent } from './list-item-task/list-item-task.component';
 import {AddTaskTodoComponent} from "./add-taskTodo/add-taskTodo.component";
-
+import {StoreModule, StoreRootModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { ToastComponent } from './toast/toast.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,16 +21,20 @@ import {AddTaskTodoComponent} from "./add-taskTodo/add-taskTodo.component";
     TaskComponent,
     ItemTaskComponent,
     ListItemTaskComponent,
-    AddTaskTodoComponent
+    AddTaskTodoComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

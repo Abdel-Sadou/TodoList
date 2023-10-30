@@ -1,0 +1,15 @@
+<div class="m-4">
+  <div style="position: absolute ; top: 20% ; right: 7%">
+    <div class="toast" data-bs-delay="1000" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto"><i class="bi-gift-fill"></i> Message !</strong>
+        <small>now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" [ngClass]="{'text-primary':type=='success' ,'text-danger':type=='error'}">
+        {{message}}
+      </div>
+    </div>
+  </div>
+
+</div>

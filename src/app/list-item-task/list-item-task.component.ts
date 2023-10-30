@@ -3,6 +3,7 @@ import {filter, Observable} from "rxjs";
 import {ActionEvent, AppDataState, DataState, TaskTodo, TaskTypeOperation} from "../../model/task";
 import {TaskTodoService} from "../../service/task.service";
 import {EvenDriverService} from "../../service/even-driver.service";
+import {gsap} from "gsap";
 
 @Component({
   selector: 'app-list-item-task',
@@ -20,6 +21,9 @@ export class ListItemTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    gsap.from(".filter",{x:-600, ease:"elastic.out", duration:1})
+    gsap.from(".indicator",{x:-600, ease:"elastic.out", duration:1})
+
     this.filter = "all";
   }
 

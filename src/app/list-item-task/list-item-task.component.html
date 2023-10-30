@@ -1,7 +1,7 @@
 <div class="row mt-4 container-fluid  fs-7">
   <div class="row">
-    <div class="col-md-2 border-end ">
-      <div class="col-12 row">
+    <div class="col-md-2 border-end filter">
+      <div class="row">
         <div class="col-4"><h6>Filter <i class="fa fa-1x fs-7 fa-filter"></i></h6></div>
         <div class="col-8 ">
           <select class="fs-7 custom-select form-control" [(ngModel)]="categorie" (change)="_onSelectCategorie()">
@@ -28,7 +28,8 @@
         </li>
       </ul>
     </div>
-    <div class="col-md-10">
+
+    <div class="col-md-9 row">
       <ng-container *ngIf="tasks$|async as result" [ngSwitch]="result.state">
 
         <ng-container *ngSwitchCase="DataState.ERROR">
@@ -36,7 +37,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="DataState.LOADING">
-          <div class="container-fluid justify-content-center d-flex align-items-center " style="height: 100% ; margin: auto">
+          <div class="\ row d-flex justify-content-center align-items-center " style="height: 100% ; margin: auto">
             <div class="spinner-border " style="width: 3rem; height: 3rem; color: #bdc0b1" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
@@ -44,9 +45,14 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="DataState.LOAD">
-          <app-item-task [tasks]="result.data"></app-item-task>
+            <app-item-task [tasks]="result.data"></app-item-task>
         </ng-container>
       </ng-container>
+    </div>
+    <div class="col-md-1 indicator">
+      <span class="badge rounded-pill bg-color-logo text-black-50">End of the task</span>
+      <span class="badge rounded-pill bg-color-edit text-black-50">Task in progress</span>
+      <span class="badge rounded-pill bg-danger ">delete task</span>
     </div>
   </div>
 </div>
